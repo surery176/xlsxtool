@@ -1,0 +1,2 @@
+main.exe -idir D:\\work\\xy\\挂机类\\内网开发配置表 -clientojson D:\\work\\gitRepository\\esj\\out\\cli.json -clientitemp D:\\work\\gitRepository\\esj\\template\\template.ts -clientotemp D:\\work\\gitRepository\\esj\\out\\cli.ts -pkgn packname -serverojson D:\\work\\gitRepository\\esj\\out\\svr.json -serveritemp D:\\work\\gitRepository\\esj\\template\\template.py -serverotemp D:\\work\\gitRepository\\esj\\out\\svr.py
+pause
