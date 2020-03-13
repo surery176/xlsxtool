@@ -24,6 +24,8 @@
         mapstring3      3维字典，字符串类型。前端对应Map<string, <Array<Array<string>>>>,服务器对应 map[string][][][]string
         类型后面带&client 只前端需要用到，服务器不导出到json配置
         类型后面带&server 只服务器需要用到，前端不导出到json配置
+		
+		数组类型的字段后面再带 &n n为数字，可以强制检查数字长度一定为n，防止配错
 
 表第3行：字段名，英文命名
 表第4行开始为数据
@@ -36,7 +38,3 @@ map模式。key与value之间分隔符用@ key与key之间用$，如类型：map
 
 - 常见模板见template文件夹
 
-导表参数
-main.exe -idir D:\\work\\xy\\挂机类\\内网开发配置表 -clientojson D:\\work\\gitRepository\\esj\\out\\cli.json -client
-itemp D:\\work\\gitRepository\\esj\\template\\template_xy.ts -clientotemp D:\\work\\gitRepository\\esj\\out\\cli.ts -pkgn packname -serverojson D:\\work\\gitRepository\\esj\\out\\svr.json -serveritemp D:\\work\\gitRepository\\esj\\template\\template.py -serverotemp D:\\work\\gitRepository\\esj\\out\\svr.py -mapSrc D:\\work\\xy\\挂机类\\内网开发配置表\\map
-\\
