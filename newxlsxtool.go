@@ -596,6 +596,65 @@ func handleRows(sheet *xlsx.Sheet, isArray bool) (cliresp interface{}, cliSC []s
 	typeRow := sheet.Rows[1]
 	nameRow := sheet.Rows[2]
 
+	for i, _ := range nameRow.Cells {
+		//超出的字段不用
+		if len(nameRow.Cells) <= i || len(typeRow.Cells) <= i {
+			//fmt.Println(i, cindex, c.Value, rindex)
+			continue
+		}
+		valueType := typeRow.Cells[i].Value
+		valueType = strings.Replace(valueType, " ", "", -1)
+		valueName := nameRow.Cells[i].Value
+		valueName = strings.Replace(valueName, " ", "", -1)
+		valueDesc := ""
+		if len(descRow.Cells) > i {
+			valueDesc = descRow.Cells[i].Value
+		}
+		valueDesc = strings.Replace(valueDesc, " ", "", -1)
+		//值为空
+		if 0 == len(valueType) || 0 == len(valueName) {
+			continue
+		}
+
+		//分开客户端服务器
+		isSvr := 1
+		isCli := 1
+		if strings.Contains(valueType, "&client") {
+			isSvr = 0
+		} else if strings.Contains(valueType, "&server") {
+			isCli = 0
+		}
+		valueType = strings.Replace(valueType, "&client", "", -1)
+		valueType = strings.Replace(valueType, "&server", "", -1)
+		valueType = strings.Replace(valueType, "&key", "", -1)
+
+		if 1 == isSvr {
+			_, ok := svrnames[valueName]
+			if !ok {
+				svrnames[valueName] = false
+
+				var sc svrCore
+				sc.Name = valueName
+				sc.Type = valueType
+				sc.Comment = valueDesc
+				svrSC = append(svrSC, sc)
+			}
+		}
+
+		if 1 == isCli {
+			_, ok := clinames[valueName]
+			if !ok {
+				clinames[valueName] = false
+
+				var sc svrCore
+				sc.Name = valueName
+				sc.Type = valueType
+				sc.Comment = valueDesc
+				cliSC = append(cliSC, sc)
+			}
+		}
+	}
+
 	if isArray {
 		cliretval := make([]map[string]interface{}, 0)
 		svrretval := make([]map[string]interface{}, 0)
