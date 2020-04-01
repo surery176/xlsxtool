@@ -1,3 +1,5 @@
+请使用 newxlsxtool新版导表工具
+
 表名@表示要导出配置表
 %代表这个表是List模式，否则代表Map模式
 @# 只导出服务器表
@@ -16,12 +18,6 @@
         arraystring3    3维数组，字符串类型。前端对应<Array<Array<string>>>,服务器对应[][][]string
 		mapint          整数字典，数值类型。前端对应Map<string, number>,服务器对应 map[string]int
 		mapstring       字符串字典，字符串类型。前端对应Map<string, string>,服务器对应 map[string]string
-		mapint1         1维字典，数值类型。前端对应Map<string, Array<number>>,服务器对应 map[string][]int
-        mapint2         2维字典，数值类型。前端对应Map<string, Array<Array<number>>>,服务器对应 map[string][][]int
-        mapint3         3维字典，数值类型。前端对应Map<string, <Array<Array<string>>>>,服务器对应 map[string][][][]int
-        mapstring1      1维字典，字符串类型。前端对应Map<string, Array<string>>,服务器对应 map[string][]string
-        mapstring2      2维字典，字符串类型。前端对应Map<string, Array<Array<string>>>,服务器对应 map[string][][]string
-        mapstring3      3维字典，字符串类型。前端对应Map<string, <Array<Array<string>>>>,服务器对应 map[string][][][]string
         类型后面带&client 只前端需要用到，服务器不导出到json配置
         类型后面带&server 只服务器需要用到，前端不导出到json配置
 		
@@ -34,7 +30,7 @@
 2维数组用 _;分割   例如  1_2_3;1_2_3
 3维数组用 _;#分割 例如  1_2_3;1_2_3#1_2_3;1_2_3
 
-map模式。key与value之间分隔符用@ key与key之间用$，如类型：mapint1 数据keyA@1_2_3$keyA@1_2_3
+map模式。key与value之间分隔符用_ key与key之间用;，如类型：mapint 数据key_3;key_3
 
 - 常见模板见template文件夹
 

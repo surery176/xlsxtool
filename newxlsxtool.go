@@ -135,12 +135,12 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 	} else if tttt == "mapint" {
 		mm := make(map[string]int64)
 		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
+			kk := strings.Split(xxxx, ";")
 
 			for _, v := range kk {
 
 				if 0 != len(v) {
-					kv := strings.Split(v, "@")
+					kv := strings.Split(v, "_")
 					if len(kv) != 2 {
 						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 					}
@@ -154,268 +154,16 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 	} else if tttt == "mapstring" {
 		mm := make(map[string]json.RawMessage)
 		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
+			kk := strings.Split(xxxx, ";")
 
 			for _, v := range kk {
 
 				if 0 != len(v) {
-					kv := strings.Split(v, "@")
+					kv := strings.Split(v, "_")
 					if len(kv) != 2 {
 						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 					}
 					mm[kv[0]] = json.RawMessage(`"` + kv[1] + `"`)
-				}
-
-			}
-		}
-		return mm
-	} else if tttt == "mapint1" {
-		mm := make(map[string][]int64)
-		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
-
-			for _, v := range kk {
-
-				if 0 != len(v) {
-					kv := strings.Split(v, "@")
-					if len(kv) != 2 {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
-					jvi := make([]int64, 0)
-					if 0 != len(kv[1]) {
-						jvs := strings.Split(kv[1], "_")
-						if valueLen != 0 && len(jvs) != valueLen {
-							panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-						}
-
-						for _, v := range jvs {
-							jv, _ := strconv.ParseInt(v, 10, 64)
-							jvi = append(jvi, jv)
-						}
-					}
-					mm[kv[0]] = jvi
-				}
-
-			}
-		}
-		return mm
-	} else if tttt == "mapstring1" {
-		mm := make(map[string][]json.RawMessage)
-		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
-
-			for _, v := range kk {
-
-				if 0 != len(v) {
-					kv := strings.Split(v, "@")
-					if len(kv) != 2 {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
-					jvi := make([]json.RawMessage, 0)
-					if 0 != len(kv[1]) {
-						jvs1 := strings.Split(kv[1], "_")
-						if valueLen != 0 && len(jvs1) != valueLen {
-							panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-						}
-						for _, v1 := range jvs1 {
-							jvi = append(jvi, json.RawMessage(`"` + v1 + `"`))
-						}
-					}
-					mm[kv[0]] = jvi
-				}
-
-			}
-		}
-		return mm
-	} else if tttt == "mapint2" {
-		mm := make(map[string][][]int64)
-		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
-
-			for _, v := range kk {
-
-				if 0 != len(v) {
-					kv := strings.Split(v, "@")
-					if len(kv) != 2 {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
-					jvi := make([][]int64, 0)
-					if 0 != len(kv[1]) {
-						jvs := strings.Split(kv[1], ";")
-
-						for _, v := range jvs {
-
-							jvi1 := make([]int64, 0)
-
-							if 0 != len(v) {
-								jvs1 := strings.Split(v, "_")
-								if valueLen != 0 && len(jvs1) != valueLen {
-									panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-								}
-
-								for _, v1 := range jvs1 {
-
-									jv, _ := strconv.ParseInt(v1, 10, 64)
-									jvi1 = append(jvi1, jv)
-								}
-							}
-
-							jvi = append(jvi, jvi1)
-						}
-					}
-					mm[kv[0]] = jvi
-				}
-
-			}
-		}
-		return mm
-	} else if tttt == "mapstring2" {
-		mm := make(map[string][][]json.RawMessage)
-		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
-
-			for _, v := range kk {
-
-				if 0 != len(v) {
-					kv := strings.Split(v, "@")
-					if len(kv) != 2 {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
-					jvi := make([][]json.RawMessage, 0)
-					if 0 != len(kv[1]) {
-						jvs := strings.Split(kv[1], ";")
-
-						for _, v := range jvs {
-
-							jvi1 := make([]json.RawMessage, 0)
-
-							if 0 != len(v) {
-								jvs1 := strings.Split(v, "_")
-								if valueLen != 0 && len(jvs1) != valueLen {
-									panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-								}
-
-								for _, v1 := range jvs1 {
-									jvi1 = append(jvi1, json.RawMessage(`"` + v1 + `"`))
-								}
-							}
-
-							jvi = append(jvi, jvi1)
-						}
-					}
-					mm[kv[0]] = jvi
-				}
-
-			}
-		}
-		return mm
-	} else if tttt == "mapint3" {
-		mm := make(map[string][][][]int64)
-		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
-
-			for _, v := range kk {
-
-				if 0 != len(v) {
-					kv := strings.Split(v, "@")
-					if len(kv) != 2 {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
-					jvi := make([][][]int64, 0)
-					if 0 != len(kv[1]) {
-						jvs := strings.Split(kv[1], "#")
-
-						for _, v := range jvs {
-
-							jvi1 := make([][]int64, 0)
-
-							if 0 != len(v) {
-								jvs1 := strings.Split(v, ";")
-
-								for _, v1 := range jvs1 {
-
-									jvi2 := make([]int64, 0)
-
-									if 0 != len(v1) {
-										jvs2 := strings.Split(v1, "_")
-										if valueLen != 0 && len(jvs2) != valueLen {
-											panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-										}
-
-										for _, v2 := range jvs2 {
-
-											jv, _ := strconv.ParseInt(v2, 10, 64)
-											jvi2 = append(jvi2, jv)
-										}
-									}
-
-									jvi1 = append(jvi1, jvi2)
-								}
-							}
-
-							jvi = append(jvi, jvi1)
-						}
-					}
-
-					mm[kv[0]] = jvi
-				}
-
-			}
-		}
-		return mm
-	} else if tttt == "mapstring3" {
-		mm := make(map[string][][][]json.RawMessage)
-		if 0 != len(xxxx) {
-			kk := strings.Split(xxxx, "$")
-
-			for _, v := range kk {
-
-				if 0 != len(v) {
-					kv := strings.Split(v, "@")
-					if len(kv) != 2 {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
-					jvi := make([][][]json.RawMessage, 0)
-					if 0 != len(kv[1]) {
-						jvs := strings.Split(kv[1], "#")
-
-						for _, v := range jvs {
-
-							jvi1 := make([][]json.RawMessage, 0)
-
-							if 0 != len(v) {
-								jvs1 := strings.Split(v, ";")
-
-								for _, v1 := range jvs1 {
-
-									jvi2 := make([]json.RawMessage, 0)
-
-									if 0 != len(v1) {
-										jvs2 := strings.Split(v1, "_")
-										if valueLen != 0 && len(jvs2) != valueLen {
-											panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-										}
-
-										for _, v2 := range jvs2 {
-											jvi2 = append(jvi2, json.RawMessage(`"` + v2 + `"`))
-										}
-									}
-
-									jvi1 = append(jvi1, jvi2)
-								}
-							}
-
-							jvi = append(jvi, jvi1)
-						}
-					}
-
-					mm[kv[0]] = jvi
 				}
 
 			}
@@ -449,6 +197,33 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 		}
 		return jvi
 	} else if tttt == "arrayint2" {
+		jvi := make([][]int64, 0)
+		if 0 != len(xxxx) {
+			jvs := strings.Split(xxxx, ";")
+
+			for _, v := range jvs {
+
+				jvi1 := make([]int64, 0)
+
+				if 0 != len(v) {
+					jvs1 := strings.Split(v, "_")
+					if valueLen != 0 && len(jvs1) != valueLen {
+						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
+					}
+
+					for _, v1 := range jvs1 {
+
+						jv, _ := strconv.ParseInt(v1, 10, 64)
+						jvi1 = append(jvi1, jv)
+					}
+				}
+
+				jvi = append(jvi, jvi1)
+			}
+		}
+
+		return jvi
+	} else if tttt == "arrayint2tomap" {
 		jvi := make([][]int64, 0)
 		if 0 != len(xxxx) {
 			jvs := strings.Split(xxxx, ";")
