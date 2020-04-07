@@ -116,14 +116,7 @@ func strEncode(content string) string {
 	return bf.String()
 }
 
-func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interface{} {
-	_tmp := strings.Split(tttt, "&")
-	tttt = _tmp[0]
-	valueLen := 0
-	if len(_tmp) == 2 {
-		valueLen, _ = strconv.Atoi(_tmp[1])
-	}
-
+func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string, valueLen int) interface{} {
 	if tttt == "int" {
 		jvi, err := strconv.ParseInt(xxxx, 10, 64)
 		if err != nil {
@@ -173,13 +166,12 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 		jvi := make([]int64, 0)
 		if 0 != len(xxxx) {
 			jvs := strings.Split(xxxx, "_")
-			if valueLen != 0 && len(jvs) != valueLen {
-				panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-			}
-
 			for _, v := range jvs {
 				jv, _ := strconv.ParseInt(v, 10, 64)
 				jvi = append(jvi, jv)
+			}
+			if valueLen != 0 && len(jvi) != valueLen {
+				panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 			}
 		}
 
@@ -188,11 +180,11 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 		jvi := make([]json.RawMessage, 0)
 		if 0 != len(xxxx) {
 			jvs1 := strings.Split(xxxx, "_")
-			if valueLen != 0 && len(jvs1) != valueLen {
-				panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-			}
 			for _, v1 := range jvs1 {
 				jvi = append(jvi, json.RawMessage(`"` + v1 + `"`))
+			}
+			if valueLen != 0 && len(jvi) != valueLen {
+				panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 			}
 		}
 		return jvi
@@ -207,14 +199,13 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 
 				if 0 != len(v) {
 					jvs1 := strings.Split(v, "_")
-					if valueLen != 0 && len(jvs1) != valueLen {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
 					for _, v1 := range jvs1 {
 
 						jv, _ := strconv.ParseInt(v1, 10, 64)
 						jvi1 = append(jvi1, jv)
+					}
+					if valueLen != 0 && len(jvi1) != valueLen {
+						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 					}
 				}
 
@@ -234,14 +225,12 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 
 				if 0 != len(v) {
 					jvs1 := strings.Split(v, "_")
-					if valueLen != 0 && len(jvs1) != valueLen {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
 					for _, v1 := range jvs1 {
-
 						jv, _ := strconv.ParseInt(v1, 10, 64)
 						jvi1 = append(jvi1, jv)
+					}
+					if valueLen != 0 && len(jvi1) != valueLen {
+						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 					}
 				}
 
@@ -261,12 +250,11 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 
 				if 0 != len(v) {
 					jvs1 := strings.Split(v, "_")
-					if valueLen != 0 && len(jvs1) != valueLen {
-						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-					}
-
 					for _, v1 := range jvs1 {
 						jvi1 = append(jvi1, json.RawMessage(`"` + v1 + `"`))
+					}
+					if valueLen != 0 && len(jvi1) != valueLen {
+						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 					}
 				}
 
@@ -293,14 +281,12 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 
 						if 0 != len(v1) {
 							jvs2 := strings.Split(v1, "_")
-							if valueLen != 0 && len(jvs2) != valueLen {
-								panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-							}
-
 							for _, v2 := range jvs2 {
-
 								jv, _ := strconv.ParseInt(v2, 10, 64)
 								jvi2 = append(jvi2, jv)
+							}
+							if valueLen != 0 && len(jvi2) != valueLen {
+								panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 							}
 						}
 
@@ -331,12 +317,11 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string) interf
 
 						if 0 != len(v1) {
 							jvs2 := strings.Split(v1, "_")
-							if valueLen != 0 && len(jvs2) != valueLen {
-								panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
-							}
-
 							for _, v2 := range jvs2 {
 								jvi2 = append(jvi2, json.RawMessage(`"` + v2 + `"`))
+							}
+							if valueLen != 0 && len(jvi2) != valueLen {
+								panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
 							}
 						}
 
@@ -402,6 +387,9 @@ func handleRows(sheet *xlsx.Sheet, isArray bool) (cliresp interface{}, cliSC []s
 		valueType = strings.Replace(valueType, "&client", "", -1)
 		valueType = strings.Replace(valueType, "&server", "", -1)
 		valueType = strings.Replace(valueType, "&key", "", -1)
+
+		_tmp := strings.Split(valueType, "&")
+		valueType = _tmp[0]
 
 		if 1 == isSvr {
 			_, ok := svrnames[valueName]
@@ -484,6 +472,13 @@ func handleRows(sheet *xlsx.Sheet, isArray bool) (cliresp interface{}, cliSC []s
 				valueType = strings.Replace(valueType, "&server", "", -1)
 				valueType = strings.Replace(valueType, "&key", "", -1)
 
+				_tmp := strings.Split(valueType, "&")
+				valueType = _tmp[0]
+				valueLen := 0
+				if len(_tmp) == 2 {
+					valueLen, _ = strconv.Atoi(_tmp[1])
+				}
+
 				if 1 == isSvr {
 					_, ok := svrnames[valueName]
 					if !ok {
@@ -515,7 +510,7 @@ func handleRows(sheet *xlsx.Sheet, isArray bool) (cliresp interface{}, cliSC []s
 					continue
 				}
 
-				setval := str2value(sheet, rowline, i+1, valueType, v)
+				setval := str2value(sheet, rowline, i+1, valueType, v, valueLen)
 				if setval == nil || (reflect.ValueOf(setval).Kind() == reflect.Ptr && reflect.ValueOf(setval).IsNil()) {
 					continue
 				}
@@ -590,6 +585,13 @@ func handleRows(sheet *xlsx.Sheet, isArray bool) (cliresp interface{}, cliSC []s
 				valueType = strings.Replace(valueType, "&server", "", -1)
 				valueType = strings.Replace(valueType, "&key", "", -1)
 
+				_tmp := strings.Split(valueType, "&")
+				valueType = _tmp[0]
+				valueLen := 0
+				if len(_tmp) == 2 {
+					valueLen, _ = strconv.Atoi(_tmp[1])
+				}
+
 				if 1 == isSvr {
 					_, ok := svrnames[valueName]
 					if !ok {
@@ -621,7 +623,7 @@ func handleRows(sheet *xlsx.Sheet, isArray bool) (cliresp interface{}, cliSC []s
 					continue
 				}
 
-				setval := str2value(sheet, rowline, i+1, valueType, v)
+				setval := str2value(sheet, rowline, i+1, valueType, v, valueLen)
 				if setval == nil || (reflect.ValueOf(setval).Kind() == reflect.Ptr && reflect.ValueOf(setval).IsNil()) {
 					continue
 				}
