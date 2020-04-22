@@ -263,6 +263,30 @@ func str2value(sheet *xlsx.Sheet, rowline, column int, tttt, xxxx string, valueL
 		}
 
 		return jvi
+	} else if tttt == "arraystring2tomap" {
+		jvi := make([][]json.RawMessage, 0)
+		if 0 != len(xxxx) {
+			jvs := strings.Split(xxxx, ";")
+
+			for _, v := range jvs {
+
+				jvi1 := make([]json.RawMessage, 0)
+
+				if 0 != len(v) {
+					jvs1 := strings.Split(v, "_")
+					for _, v1 := range jvs1 {
+						jvi1 = append(jvi1, json.RawMessage(`"` + v1 + `"`))
+					}
+					if valueLen != 0 && len(jvi1) != valueLen {
+						panic(fmt.Sprintf("%s  row:%d  col:%d  %s", sheet.Name, rowline, column, xxxx))
+					}
+				}
+
+				jvi = append(jvi, jvi1)
+			}
+		}
+
+		return jvi
 	} else if tttt == "arrayint3" {
 		jvi := make([][][]int64, 0)
 		if 0 != len(xxxx) {

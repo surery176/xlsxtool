@@ -17,6 +17,10 @@ interface I{{$v.Name|ToUpper}}Conf {
 	{{$vv.Name}}: Array<number>;
 	{{- else if eq $vv.Type "arrayint2"}}
 	{{$vv.Name}}: Array<Array<number>>;
+	{{- else if eq $vv.Type "arrayint2tomap"}}
+	{{$vv.Name}}: Array<Array<number>>;
+	{{- else if eq $vv.Type "arraystring2tomap"}}
+	{{$vv.Name}}: Array<Array<string>>;
 	{{- else if eq $vv.Type "arrayint3"}}
 	{{$vv.Name}}: Array<Array<Array<number>>>;
 	{{- else if eq $vv.Type "string"}}
@@ -28,21 +32,21 @@ interface I{{$v.Name|ToUpper}}Conf {
 	{{- else if eq $vv.Type "arraystring3"}}
 	{{$vv.Name}}: Array<Array<Array<string>>>;
 	{{- else if eq $vv.Type "mapint"}}
-	{{$vv.Name}}: Map<string, number>;
+	{{$vv.Name}}: MapDic<number>;
 	{{- else if eq $vv.Type "mapint1"}}
-	{{$vv.Name}}: Map<string, Array<number>>;
+	{{$vv.Name}}: MapDic<Array<number>>;
 	{{- else if eq $vv.Type "mapint2"}}
-	{{$vv.Name}}: Map<string, Array<Array<number>>>;
+	{{$vv.Name}}: MapDic<Array<Array<number>>>;
 	{{- else if eq $vv.Type "mapint3"}}
-	{{$vv.Name}}: Map<string, Array<Array<Array<number>>>>;
+	{{$vv.Name}}: MapDic<Array<Array<Array<number>>>>;
 	{{- else if eq $vv.Type "mapstring"}}
-	{{$vv.Name}}: Map<string, string>;
+	{{$vv.Name}}: MapDic<string>;
 	{{- else if eq $vv.Type "mapstring1"}}
-	{{$vv.Name}}: Map<string, Array<string>>;
+	{{$vv.Name}}: MapDic<Array<string>>;
 	{{- else if eq $vv.Type "mapstring2"}}
-	{{$vv.Name}}: Map<string, Array<Array<string>>>>;
+	{{$vv.Name}}: MapDic<Array<Array<string>>>>;
 	{{- else if eq $vv.Type "mapstring3"}}
-	{{$vv.Name}}: Map<string, Array<Array<Array<string>>>>;
+	{{$vv.Name}}: MapDic<Array<Array<Array<string>>>>;
 	{{- end}}
 {{end}}
 }

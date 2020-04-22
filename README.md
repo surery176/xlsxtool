@@ -22,6 +22,9 @@
         类型后面带&server 只服务器需要用到，前端不导出到json配置
 		
 		数组类型的字段后面再带 &n n为数字，可以强制检查数字长度一定为n，防止配错
+		
+		arrayint2tomap     py模板特用，客户端还是2维数组，py转换成 {int:int}
+		arraystring2tomap   py模板特用，客户端还是2维数组，py转换成 {string:string}
 
 表第3行：字段名，英文命名
 表第4行开始为数据
