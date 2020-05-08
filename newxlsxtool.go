@@ -23,6 +23,7 @@ import (
 	"encoding/json"
 	"io"
 	"unicode"
+	"path"
 )
 
 type svrDef struct {
@@ -880,6 +881,11 @@ func CreateFileDir(file string) {
 	dir := GetFileDir(file)
 	if !IsExist(dir) {
 		os.MkdirAll(dir, os.ModePerm)
+	}else {
+		err := os.Remove(file)
+		if err != nil {
+			fmt.Println("配置表删除错误：", file)
+		}
 	}
 }
 func IsExist(file string) bool {
@@ -918,13 +924,17 @@ func main() {
 	}
 
 	wg.Wait() //阻塞直到所有任务完成
-	svrstr, _ := json.Marshal(svrmap)
-	CreateFileDir(*serverojson)
-	err = ioutil.WriteFile(*serverojson, svrstr, os.ModePerm)
-	if err != nil {
-		panic(err)
-	}
 
+	CreateFileDir(*serverojson)
+	dir := GetFileDir(*serverojson)
+	for key, value := range svrmap {
+		filename := path.Join(dir, key+".json")
+		svrstr, _ := json.Marshal(value)
+		err = ioutil.WriteFile(filename, svrstr, os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
+	}
 	// 写zip文件数据流
 	setMapJson()
 	buf := getZipBuffer()
